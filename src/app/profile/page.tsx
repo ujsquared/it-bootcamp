@@ -1,7 +1,6 @@
 import { getServerSession } from "next-auth/next"
 import { redirect } from "next/navigation"
 import ProfileForm from "../components/ProfileForm"
-import clientPromise from "@/lib/mongodb"
 
 export default async function Profile() {
   const session = await getServerSession()
@@ -9,9 +8,8 @@ export default async function Profile() {
     redirect("/api/auth/signin")
   }
 
-  const client = await clientPromise
-  const db = client.db()
-  const user = await db.collection("users").findOne({ email: session.user.email })
+  // You can fetch user data from your backend API here
+  const user = {} // Replace with API call when ready
 
   return (
     <div className="space-y-6">

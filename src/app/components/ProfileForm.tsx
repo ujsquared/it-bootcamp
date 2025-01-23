@@ -4,13 +4,19 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
 
-const ProfileForm = ({ user }) => {
+interface User {
+  name?: string;
+  hobbies?: string[];
+  image?: string;
+}
+
+const ProfileForm = ({ user }: { user: User }) => {
   const [name, setName] = useState(user.name || "")
   const [hobbies, setHobbies] = useState(user.hobbies?.join(", ") || "")
   const [image, setImage] = useState(user.image || "")
   const router = useRouter()
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const res = await fetch("/api/profile", {
       method: "POST",
