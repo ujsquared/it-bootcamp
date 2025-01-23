@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes loadingBar {
+  0% {
+    width: 0;
+  }
+
+  100% {
+    width: 100%;
+  }
+}
+
+.animate-loadingBar {
+  animation: loadingBar 1.5s ease-in-out forwards;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

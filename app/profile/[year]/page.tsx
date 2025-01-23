@@ -26,12 +26,12 @@ async function getProfiles(year: string) {
   }
 }
 
-export default function YearPage({ params }: { params: { year: string } }) {
+export default async function YearPage( { params }: { params: { year: string } } ) {
   const profiles = use(getProfiles(params.year));
 
   return (
     <div>
-      <h1>Profile for year: {params.year}</h1>
+      <h1>Profile for year: { params.year}</h1>
       <div className="profiles-grid">
         {profiles.map((profile: any) => (
           <div key={profile._id.toString()} className="profile-card">
