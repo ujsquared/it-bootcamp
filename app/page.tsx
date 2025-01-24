@@ -11,7 +11,6 @@ export default function Home() {
   return (
     <>
       <ParticleBackground />
-
       <NavBar />
       {/* Hero Section */}
       <div className="relative min-h-screen flex items-center">
