@@ -1,59 +1,81 @@
 'use client';
 import Link from "next/link";
 import ParticleBackground from "../components/ParticleBackground";
+import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 export default function About() {
   return (
-    <>
-      <ParticleBackground />
-      {/* Navigation */}
-      <nav className="fixed w-full z-10 bg-transparent">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-20 items-center">
-            <div className="flex-shrink-0">
-              <h1 className="text-2xl tracking-[0.2em] text-white opacity-90" style={{ fontFamily: 'Helvetica Neue, sans-serif' }}>
-                IT BOOTCAMP
-              </h1>
-            </div>
-            <div className="hidden md:block">
-              <div className="ml-10 flex items-center space-x-12">
-                <Link href="/" className="text-gray-300 hover:text-white px-3 py-2 tracking-[0.15em] text-sm transition-colors">HOME</Link>
-                <Link href="/about" className="text-gray-300 hover:text-white px-3 py-2 tracking-[0.15em] text-sm transition-colors">ABOUT</Link>
-                <Link href="/gallery" className="text-gray-300 hover:text-white px-3 py-2 tracking-[0.15em] text-sm transition-colors">GALLERY</Link>
-                <Link href="/login" className="border border-white/30 text-white px-8 py-3 tracking-[0.15em] text-sm hover:bg-white/10 transition-colors">LOGIN</Link>
-              </div>
-            </div>
+    <div className="relative min-h-screen flex items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
+          {/* Left side - About Text */}
+          <div className="animate-float">
+            <h2 className="text-3xl sm:text-4xl font-light text-white mb-6 sm:mb-8 tracking-wide">
+              About Us
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-400 leading-relaxed tracking-wide font-light max-w-xl">
+              This is IT Bootcamp of IIIT Bhubaneswar, has batches 2025, 2026, 2027, 2028
+            </p>
           </div>
-        </div>
-      </nav>
 
-      {/* About Section */}
-      <div className="relative min-h-screen flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="grid grid-cols-2 gap-16 items-center">
-            {/* Left side text */}
-            <div className="animate-float">
-              <h2 className="text-4xl font-light text-white mb-8 tracking-wide">
-                About Us
-              </h2>
-              <p className="text-xl text-gray-400 leading-relaxed tracking-wide font-light">
-                This is IT Bootcamp of IIIT Bhubaneswar, has batches 2025, 2026, 2027, 2028
-              </p>
-              <div className="mt-12 grid grid-cols-2 gap-4">
-                {[2025, 2026, 2027, 2028].map((year) => (
-                  <div key={year}
-                    className="border border-white/10 rounded-lg p-4 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1">
-                    <span className="text-white text-xl font-light">{year}</span>
-                  </div>
-                ))}
+          {/* Right side - Creators Box */}
+          <div className="backdrop-blur-sm bg-white/5 p-8 rounded-lg border border-white/10 hover:-translate-y-2 transition-all duration-500 animate-float">
+            <h3 className="text-2xl font-light text-white mb-8 tracking-wide text-center">Site Creators</h3>
+            
+            {/* Ujjwal Kala */}
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xl text-gray-300 font-light">Ujjwal Kala</p>
+                <div className="flex items-center gap-4">
+                  <a 
+                    href="https://www.linkedin.com/in/ujjwal-kala-8a854328a/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-blue-400 transition-colors"
+                  >
+                    <FaLinkedin size={24} />
+                  </a>
+                  <a 
+                    href="https://github.com/ujsquared"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <FaGithub size={24} />
+                  </a>
+                </div>
               </div>
+              <p className="text-gray-400 font-light">Backend</p>
             </div>
 
-            {/* Right side empty for particles */}
-            <div className="h-full"></div>
+            {/* Ansh Malgotra */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-xl text-gray-300 font-light">Ansh Malgotra</p>
+                <div className="flex items-center gap-4">
+                  <a 
+                    href="https://www.linkedin.com/in/ansh-malgotra-7b39b1274/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-blue-400 transition-colors"
+                  >
+                    <FaLinkedin size={24} />
+                  </a>
+                  <a 
+                    href="https://github.com/shokuyansh"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <FaGithub size={24} />
+                  </a>
+                </div>
+              </div>
+              <p className="text-gray-400 font-light">Frontend</p>
+            </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

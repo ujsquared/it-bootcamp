@@ -9,18 +9,12 @@ import NavBar from "./components/NavBar";
 
 export default function Home() {
   return (
-    <>
-      <ParticleBackground />
-
-      <NavBar />
-      {/* Hero Section */}
-      <div className="relative min-h-screen flex items-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center">
-            {/* Removed all text content to keep only particles visible */}
-          </div>
+    <div className="relative min-h-screen flex items-center px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto">
+        <div className="text-center">
+          {/* Empty for particles, but container is responsive */}
         </div>
       </div>
-    </>
+    </div>
   );
 }
