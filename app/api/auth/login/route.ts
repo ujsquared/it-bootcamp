@@ -7,9 +7,9 @@ export async function GET() {
   
   // Redirect to dashboard if already logged in
   if (session) {
-    redirect("/dashboard");
+    redirect("/");
   }
   
   // Redirect to the NextAuth signin page with Google
-  redirect("/api/auth/signin?callbackUrl=/dashboard");
+  redirect("/api/auth/signin?callbackUrl=/");
 } 
