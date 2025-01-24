@@ -1,7 +1,9 @@
 import { MongoClient } from 'mongodb';
 import { redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { getServerSession } from 'next-auth/next'; // You'll need to install next-auth
 
+const ValidYears = ["2022", "2023", "2024", "2025"]
 // MongoDB connection function
 async function getProfiles(year: string) {
   try {
@@ -14,7 +16,7 @@ async function getProfiles(year: string) {
     await client.connect();
     
     const database = client.db('student_store');
-    const collection = database.collection('twenty_three');
+    const collection = database.collection(year);
     
     // Fetch all documents from the collection without any filter
     const profiles = await collection.find({}).toArray();
@@ -34,6 +36,10 @@ export default async function YearPage({ params }: { params: { year: string } })
   
   if (!session) {
     redirect('/login');
+  }
+
+  if(!ValidYears.includes(waited_params.year)){
+      notFound();
   }
   
   const profiles = await getProfiles(waited_params.year);
