@@ -7,6 +7,10 @@ import Image from "next/image";
 export default function NavBar() {
   const { data: session, status } = useSession();
 
+  const handleSignIn = () => {
+    signIn('google', { callbackUrl: '/profile/my' });
+  };
+
   return (
     <nav className="fixed w-full z-10 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,12 +28,15 @@ export default function NavBar() {
               <Link href="/about" className="text-gray-300 hover:text-white px-3 py-2 tracking-[0.15em] text-sm transition-colors">
                 ABOUT
               </Link>
+              <Link href="/profile/year" className="text-gray-300 hover:text-white px-3 py-2 tracking-[0.15em] text-sm transition-colors">
+                YEAR
+              </Link>
               {status === "loading" ? (
                 <div className="h-10 w-20 animate-pulse bg-white/10 rounded" />
               ) : session ? (
                 <div className="flex items-center space-x-4">
                   <Link
-                    href="/profile"
+                    href="/profile/my"
                     className="flex items-center space-x-2 text-white hover:text-gray-300 transition-colors"
                   >
                     {session.user?.image && (
@@ -46,7 +53,7 @@ export default function NavBar() {
                     </span>
                   </Link>
                   <button
-                    onClick={() => signOut()}
+                    onClick={() => signOut({ callbackUrl: '/' })}
                     className="border border-white/30 text-white px-8 py-3 tracking-[0.15em] text-sm hover:bg-white/10 transition-colors"
                   >
                     LOGOUT
@@ -54,7 +61,7 @@ export default function NavBar() {
                 </div>
               ) : (
                 <button
-                  onClick={() => signIn('google')}
+                  onClick={handleSignIn}
                   className="border border-white/30 text-white px-8 py-3 tracking-[0.15em] text-sm hover:bg-white/10 transition-colors"
                 >
                   LOGIN

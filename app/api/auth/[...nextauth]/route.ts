@@ -11,7 +11,7 @@ export const authOptions = {
     // ...add more providers here
   ],
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account, profile,email,credentials }) {
       // Log the sign-in attempt
       console.log('Sign-in attempt:', { user, account, profile });
       return true;
@@ -20,5 +20,5 @@ export const authOptions = {
   debug: process.env.NODE_ENV === 'development',
 }
 
-const handler = NextAuth(authOptions)
-export { handler as GET, handler as POST }
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

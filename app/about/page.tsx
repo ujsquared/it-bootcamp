@@ -1,6 +1,6 @@
 'use client';
 import Link from "next/link";
-import ParticleBackground from "../components/ParticleBackground";
+
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 export default function About() {
@@ -21,13 +21,13 @@ export default function About() {
           {/* Right side - Creators Box */}
           <div className="backdrop-blur-sm bg-white/5 p-8 rounded-lg border border-white/10 hover:-translate-y-2 transition-all duration-500 animate-float">
             <h3 className="text-2xl font-light text-white mb-8 tracking-wide text-center">Site Creators</h3>
-            
+
             {/* Ujjwal Kala */}
             <div className="mb-8">
               <div className="flex items-center justify-between mb-2">
                 <p className="text-xl text-gray-300 font-light">Ujjwal Kala</p>
                 <div className="flex items-center gap-4">
-                  <a 
+                  <a
                     href="https://www.linkedin.com/in/ujjwal-kala-8a854328a/"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -35,7 +35,7 @@ export default function About() {
                   >
                     <FaLinkedin size={24} />
                   </a>
-                  <a 
+                  <a
                     href="https://github.com/ujsquared"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -53,7 +53,7 @@ export default function About() {
               <div className="flex items-center justify-between mb-2">
                 <p className="text-xl text-gray-300 font-light">Ansh Malgotra</p>
                 <div className="flex items-center gap-4">
-                  <a 
+                  <a
                     href="https://www.linkedin.com/in/ansh-malgotra-7b39b1274/"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -61,7 +61,7 @@ export default function About() {
                   >
                     <FaLinkedin size={24} />
                   </a>
-                  <a 
+                  <a
                     href="https://github.com/shokuyansh"
                     target="_blank"
                     rel="noopener noreferrer"
