@@ -16,6 +16,7 @@ async function getProfiles(year: string) {
     await client.connect();
     
     const database = client.db('student_store');
+    console.log(database)
     const collection = database.collection(year);
     
     // Fetch all documents from the collection without any filter
