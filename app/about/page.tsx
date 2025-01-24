@@ -1,77 +1,54 @@
 'use client';
-import Link from "next/link";
-
+import Link from 'next/link';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 export default function About() {
   return (
-    <div className="relative min-h-screen flex items-center">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
-          {/* Left side - About Text */}
-          <div className="animate-float">
-            <h2 className="text-3xl sm:text-4xl font-light text-white mb-6 sm:mb-8 tracking-wide">
-              About Us
-            </h2>
-            <p className="text-lg sm:text-xl text-gray-400 leading-relaxed tracking-wide font-light max-w-xl">
-              This is IT Bootcamp of IIIT Bhubaneswar, has batches 2025, 2026, 2027, 2028
+    <div className="min-h-screen flex items-center justify-center -mt-16">
+      <div className="grid grid-cols-2 gap-8 w-full max-w-6xl px-4">
+        {/* About Content */}
+        <div className="hover-animation">
+          <div className="glass p-8 rounded-xl">
+            <h1 className="text-4xl font-light mb-6 tracking-wider text-white">About Us</h1>
+            <div className="h-0.5 w-12 bg-white/20 mb-6"></div>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Welcome to the IT Bootcamp of IIIT Bhubaneswar, where funding never meets education.
             </p>
           </div>
+        </div>
 
-          {/* Right side - Creators Box */}
-          <div className="backdrop-blur-sm bg-white/5 p-8 rounded-lg border border-white/10 hover:-translate-y-2 transition-all duration-500 animate-float">
-            <h3 className="text-2xl font-light text-white mb-8 tracking-wide text-center">Site Creators</h3>
-
-            {/* Ujjwal Kala */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-xl text-gray-300 font-light">Ujjwal Kala</p>
-                <div className="flex items-center gap-4">
-                  <a
-                    href="https://www.linkedin.com/in/ujjwal-kala-8a854328a/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-blue-400 transition-colors"
-                  >
-                    <FaLinkedin size={24} />
-                  </a>
-                  <a
-                    href="https://github.com/ujsquared"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    <FaGithub size={24} />
-                  </a>
+        {/* Creators Section */}
+        <div className="hover-animation-delayed">
+          <div className="glass p-8 rounded-xl">
+            <h2 className="text-2xl font-light mb-6 tracking-wider text-white">Site Creators</h2>
+            <div className="space-y-6">
+              {/* Ujjwal Kala */}
+              <div className="flex flex-col">
+                <span className="text-white text-lg mb-2">Ujjwal Kala</span>
+                <span className="text-gray-400 text-sm mb-3">Backend Developer</span>
+                <div className="flex space-x-4">
+                  <Link href="https://www.linkedin.com/" className="text-gray-400 transition-colors">
+                    <FaLinkedin size={20} />
+                  </Link>
+                  <Link href="https://github.com/" className="text-gray-400 transition-colors">
+                    <FaGithub size={20} />
+                  </Link>
                 </div>
               </div>
-              <p className="text-gray-400 font-light">Backend</p>
-            </div>
 
-            {/* Ansh Malgotra */}
-            <div>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-xl text-gray-300 font-light">Ansh Malgotra</p>
-                <div className="flex items-center gap-4">
-                  <a
-                    href="https://www.linkedin.com/in/ansh-malgotra-7b39b1274/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-blue-400 transition-colors"
-                  >
-                    <FaLinkedin size={24} />
-                  </a>
-                  <a
-                    href="https://github.com/shokuyansh"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
-                    <FaGithub size={24} />
-                  </a>
+              {/* Ansh Malgotra */}
+              <div className="flex flex-col">
+                <span className="text-white text-lg mb-2">Ansh Malgotra</span>
+                <span className="text-gray-400 text-sm mb-3">Frontend Developer</span>
+                <div className="flex space-x-4">
+                  <Link href="https://www.linkedin.com/" className="text-gray-400 transition-colors">
+                    <FaLinkedin size={20} />
+                  </Link>
+                  <Link href="https://github.com/" className="text-gray-400 transition-colors">
+                    <FaGithub size={20} />
+                  </Link>
                 </div>
               </div>
-              <p className="text-gray-400 font-light">Frontend</p>
             </div>
           </div>
         </div>

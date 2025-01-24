@@ -4,7 +4,6 @@ import Providers from './components/Providers';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import type { Metadata } from 'next';
-import ParticleBackground from './components/ParticleBackground';
 
 export const metadata: Metadata = {
   title: 'IT Bootcamp',
@@ -21,12 +20,16 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ParticleBackground />
-        <Providers session={session}>
-          <GlobalLayout>
-            {children}
-          </GlobalLayout>
-        </Providers>
+        <div className="intro-wrap">
+          <div className="noise"></div>
+          <div className="noise noise-moving"></div>
+          <div className="scanlines"></div>
+          <Providers session={session}>
+            <GlobalLayout>
+              {children}
+            </GlobalLayout>
+          </Providers>
+        </div>
       </body>
     </html>
   );

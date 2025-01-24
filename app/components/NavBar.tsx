@@ -15,11 +15,7 @@ export default function NavBar() {
     <nav className="fixed w-full z-10 bg-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          <div className="flex-shrink-0">
-            <h1 className="text-2xl tracking-[0.2em] text-white opacity-90" style={{ fontFamily: 'Helvetica Neue, sans-serif' }}>
-              IT BOOTCAMP
-            </h1>
-          </div>
+          <div className="flex-shrink-0 w-48"></div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-12">
               <Link href="/" className="text-gray-300 hover:text-white px-3 py-2 tracking-[0.15em] text-sm transition-colors">
