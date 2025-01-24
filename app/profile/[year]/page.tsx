@@ -1,5 +1,6 @@
 import { MongoClient } from 'mongodb';
-import { use } from 'react';
+import { redirect } from 'next/navigation';
+import { getServerSession } from 'next-auth/next'; // You'll need to install next-auth
 
 // MongoDB connection function
 async function getProfiles(year: string) {
@@ -26,12 +27,20 @@ async function getProfiles(year: string) {
   }
 }
 
-export default async function YearPage( { params }: { params: { year: string } } ) {
-  const profiles = use(getProfiles(params.year));
+export default async function YearPage({ params }: { params: { year: string } }) {
+  // Check authentication status
+  const waited_params = await params;
+  const session = await getServerSession();
+  
+  if (!session) {
+    redirect('/login');
+  }
+  
+  const profiles = await getProfiles(waited_params.year);
 
   return (
     <div>
-      <h1>Profile for year: { params.year}</h1>
+      <h1>Profile for year: {waited_params.year}</h1>
       <div className="profiles-grid">
         {profiles.map((profile: any) => (
           <div key={profile._id.toString()} className="profile-card">
