@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
-import NavBar from '@/app/components/NavBar';
+
 import { FaCamera } from 'react-icons/fa';
 
 interface UserProfile {
@@ -84,7 +84,7 @@ export default function MyPage() {
   if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen flex flex-col">
-        <NavBar />
+        
         <div className="flex-1 flex items-center justify-center">
           <div className="text-white">Loading...</div>
         </div>
@@ -98,7 +98,7 @@ export default function MyPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <NavBar />
+     
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="backdrop-blur-sm bg-white/5 p-8 rounded-lg border border-white/10 max-w-2xl w-full">
           <div className="text-center mb-8">
