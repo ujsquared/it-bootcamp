@@ -84,7 +84,7 @@ export default function MyPage() {
   if (status === 'loading' || loading) {
     return (
       <div className="min-h-screen flex flex-col">
-        
+
         <div className="flex-1 flex items-center justify-center">
           <div className="text-white">Loading...</div>
         </div>
@@ -98,12 +98,12 @@ export default function MyPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-     
+
       <main className="flex-1 flex items-center justify-center p-4">
-        <div className="backdrop-blur-sm bg-white/5 p-8 rounded-lg border border-white/10 max-w-2xl w-full">
-          <div className="text-center mb-8">
+        <div className="max-w-2xl w-full space-y-8">
+          <div className="text-center space-y-6">
             <div
-              className="relative w-32 h-32 rounded-full overflow-hidden mx-auto mb-4 ring-2 ring-white/20 group cursor-pointer"
+              className="relative w-32 h-32 rounded-full overflow-hidden mx-auto mb-4 cursor-pointer"
               onClick={handleImageClick}
             >
               <img
@@ -111,7 +111,7 @@ export default function MyPage() {
                 alt="Profile"
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity">
                 <FaCamera className="text-white text-2xl" />
               </div>
               <input
@@ -122,55 +122,45 @@ export default function MyPage() {
                 className="hidden"
               />
             </div>
-            <h1 className="text-3xl font-light text-white mb-2">
+            <div className="type-animation font-['Press_Start_2P'] text-xl text-white">
               {userProfile?.name || session.user?.name}
-            </h1>
-            <p className="text-gray-400 mb-2">
+            </div>
+            <div className="type-animation delay-1 font-['Press_Start_2P'] text-xs text-gray-400">
               {session.user?.email}
-            </p>
+            </div>
             {userProfile && (
-              <div className="flex justify-center gap-4 text-sm text-gray-400">
-                <span>ID: {userProfile.id}</span>
+              <div className="flex justify-center gap-4 font-['Press_Start_2P'] text-xs text-gray-400">
+                <span className="type-animation delay-2">ID: {userProfile.id}</span>
                 <span>•</span>
-                <span>Year: {userProfile.year}</span>
+                <span className="type-animation delay-2">Year: {userProfile.year}</span>
               </div>
             )}
           </div>
 
-          <div className="space-y-6">
-            {userProfile?.bio && (
-              <div className="backdrop-blur-sm bg-black/20 p-6 rounded-lg">
-                <h2 className="text-white text-lg mb-3">Bio</h2>
-                <p className="text-gray-300 leading-relaxed">
-                  {userProfile.bio}
-                </p>
-              </div>
-            )}
-
-            <div className="backdrop-blur-sm bg-black/20 p-6 rounded-lg">
-              <h2 className="text-white text-lg mb-3">Account Information</h2>
-              <div className="space-y-2 text-gray-300">
-                <p>Member since: {new Date().toLocaleDateString()}</p>
-                <p>Status: Active</p>
-              </div>
+          {userProfile?.bio && (
+            <div className="space-y-4">
+              <h2 className="type-animation delay-3 font-['Press_Start_2P'] text-sm text-white">Bio</h2>
+              <p className="type-animation delay-3 font-['Press_Start_2P'] text-xs text-gray-300 leading-relaxed">
+                {userProfile.bio}
+              </p>
             </div>
+          )}
 
-            <div className="backdrop-blur-sm bg-black/20 p-6 rounded-lg">
-              <h2 className="text-white text-lg mb-3">Quick Actions</h2>
-              <div className="grid grid-cols-3 gap-4">
-                <button className="text-sm bg-white/5 hover:bg-white/10 text-white py-3 px-4 rounded transition-colors">
-                  Edit Profile
-                </button>
-                <button className="text-sm bg-white/5 hover:bg-white/10 text-white py-3 px-4 rounded transition-colors">
-                  Settings
-                </button>
-                <button
-                  onClick={handleSave}
-                  className="text-sm bg-green-500/20 hover:bg-green-500/30 text-white py-3 px-4 rounded transition-colors"
-                >
-                  Save & Exit
-                </button>
-              </div>
+          <div className="space-y-4">
+            <h2 className="type-animation delay-4 font-['Press_Start_2P'] text-sm text-white">Quick Actions</h2>
+            <div className="grid grid-cols-3 gap-4">
+              <button className="font-['Press_Start_2P'] text-xs bg-white/5 hover:bg-white/10 text-white py-3 px-4 transition-colors">
+                Edit Profile
+              </button>
+              <button className="font-['Press_Start_2P'] text-xs bg-white/5 hover:bg-white/10 text-white py-3 px-4 transition-colors">
+                Settings
+              </button>
+              <button
+                onClick={handleSave}
+                className="font-['Press_Start_2P'] text-xs bg-green-500/20 hover:bg-green-500/30 text-white py-3 px-4 transition-colors"
+              >
+                Save & Exit
+              </button>
             </div>
           </div>
         </div>
