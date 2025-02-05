@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: black;
+    color: white;
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+}
+
+.game-animation {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+}
+
+.pacman {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: yellow;
+    border-radius: 50%;
+    animation: pacmanRun 1s linear infinite;
+}
+
+.ghost {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-color: red;
+    border-radius: 50%;
+    animation: ghostChase 1s linear infinite;
+}
+
+@keyframes pacmanRun {
+    0% {
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    50% {
+        left: 80%;
+        top: 50%;
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    100% {
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%) rotate(0deg);
+    }
+}
+
+@keyframes ghostChase {
+    0% {
+        left: 20%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    50% {
+        left: 60%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    100% {
+        left: 20%;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}
+
+.not-found-text {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.meme-image {
+    max-width: 80%;
+    height: auto;
+}
