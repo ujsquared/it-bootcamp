@@ -1,6 +1,11 @@
 import { MongoClient } from 'mongodb';
 
-async function checkAllowedEmail(email: string) {
+export async function checkAllowedEmail(email: string) {
+  if (!email) {
+    console.error('No email provided for check');
+    return false;
+  }
+
   try {
     const uri = process.env.MONGODB_URI;
     if (!uri) {
@@ -19,8 +24,6 @@ async function checkAllowedEmail(email: string) {
     return result !== null;
   } catch (error) {
     console.error('Error checking allowed email:', error);
-    return false;
+    throw error; // Propagate error to be handled by the auth callback
   }
 }
-
-export { checkAllowedEmail }; 
