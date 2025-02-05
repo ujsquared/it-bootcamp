@@ -839,3 +839,50 @@ body {
   text-align: center;
   animation: rgbText 2s steps(9) 0s infinite alternate;
 }
+
+.vhs-button {
+  font-size: 2rem;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.vhs-button .char {
+  animation: glitch 0.4s infinite;
+  animation-delay: calc(var(--char-index) * 0.05s);
+  position: relative;
+  display: inline-block;
+  color: white;
+}
+
+.vhs-button:hover .char {
+  color: #ff0000;
+  text-shadow: 
+    2px 0 #00ff00,
+    -2px 0 #0000ff;
+  animation: glitch 0.2s infinite;
+}
+
+.vhs-loading {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5rem;
+  color: var(--white);
+  will-change: text-shadow;
+  animation: rgbText 2s steps(9) 0s infinite alternate;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.tracking-dots .dot {
+  opacity: 0;
+  animation: loadingDots 1s infinite;
+  animation-delay: calc(var(--dot-index) * 0.2s);
+}
+
+@keyframes loadingDots {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}

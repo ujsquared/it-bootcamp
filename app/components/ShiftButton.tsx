@@ -1,0 +1,20 @@
+'use client';
+import Link from 'next/link';
+
+interface BatchYearButtonProps {
+  year: string;
+}
+
+export default function BatchYearButton({ year }: BatchYearButtonProps) {
+  return (
+    <Link href={`/profile/${year}`}>
+      <div className="vhs-button">
+        {year.split('').map((char, i) => (
+          <span key={i} className="char" style={{ '--char-index': i } as any}>
+            {char}
+          </span>
+        ))}
+      </div>
+    </Link>
+  );
+} 

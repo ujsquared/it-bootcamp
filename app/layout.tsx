@@ -27,9 +27,9 @@ export default async function RootLayout({
           <div className="scanlines"></div>
           <Providers session={session}>
             <GlobalLayout>
-              <VHSEffectsToggle />
               {children}
             </GlobalLayout>
+            <VHSEffectsToggle />
           </Providers>
         </div>
       </body>
