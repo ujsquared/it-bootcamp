@@ -4,6 +4,7 @@ import Providers from './components/Providers';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import type { Metadata } from 'next';
+import VHSEffectsToggle from './components/VHSEffectsToggle'
 
 export const metadata: Metadata = {
   title: 'IT Bootcamp',
@@ -26,6 +27,7 @@ export default async function RootLayout({
           <div className="scanlines"></div>
           <Providers session={session}>
             <GlobalLayout>
+              <VHSEffectsToggle />
               {children}
             </GlobalLayout>
           </Providers>
