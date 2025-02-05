@@ -27,10 +27,10 @@ export default function About() {
                 <span className="text-white text-lg mb-2">Ujjwal Kala</span>
                 <span className="text-gray-400 text-sm mb-3">Backend Developer</span>
                 <div className="flex space-x-4">
-                  <Link href="https://www.linkedin.com/" className="text-gray-400 transition-colors">
+                  <Link href="https://www.linkedin.com/in/ujjwal-kala-8a854328a/" className="text-gray-400 transition-colors">
                     <FaLinkedin size={20} />
                   </Link>
-                  <Link href="https://github.com/" className="text-gray-400 transition-colors">
+                  <Link href="https://github.com/ujsquared" className="text-gray-400 transition-colors">
                     <FaGithub size={20} />
                   </Link>
                 </div>
@@ -41,10 +41,10 @@ export default function About() {
                 <span className="text-white text-lg mb-2">Ansh Malgotra</span>
                 <span className="text-gray-400 text-sm mb-3">Frontend Developer</span>
                 <div className="flex space-x-4">
-                  <Link href="https://www.linkedin.com/" className="text-gray-400 transition-colors">
+                  <Link href="https://www.linkedin.com/in/ansh-malgotra-7b39b1274/" className="text-gray-400 transition-colors">
                     <FaLinkedin size={20} />
                   </Link>
-                  <Link href="https://github.com/" className="text-gray-400 transition-colors">
+                  <Link href="https://github.com/shokuyansh" className="text-gray-400 transition-colors">
                     <FaGithub size={20} />
                   </Link>
                 </div>
