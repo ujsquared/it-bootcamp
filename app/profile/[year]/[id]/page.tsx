@@ -1,95 +1,117 @@
-import { MongoClient } from 'mongodb';
-import { redirect } from 'next/navigation';
-import { notFound } from 'next/navigation';
-import { getServerSession } from 'next-auth/next'; // You'll need to install next-auth
+'use client';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { CldImage } from 'next-cloudinary';
+import { use } from 'react';
 
-// MongoDB connection function
-async function getProfile(year: string, id: string) {
-  try {
-    const uri = process.env.MONGODB_URI;
-    if (!uri) {
-      throw new Error('MongoDB URI is not defined');
-    }
-
-    const client = new MongoClient(uri);
-    await client.connect();
-
-    const database = client.db('student_store');
-    const collection = database.collection(year);
-
-    const profile = await collection.find({ id: id }).toArray();
-
-    await client.close();
-    return profile;
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-    return [];
-  }
+interface UserProfile {
+  _id: string;
+  name: string;
+  email: string;
+  image: string;
+  id: string;
+  year: string;
+  bio: string;
 }
 
-export default async function ProfilePage({ params }: { params: { year: string, id: string } }) {
-  const session = await getServerSession();
-  const awaited_params = await params;
-  const year = awaited_params.year
-  const id = awaited_params.id
-  if (!session) {
-    redirect('/login');
+export default function ProfilePage({ params }: { params: Promise<{ year: string, id: string }> }) {
+  const { year, id } = use(params);
+  const { data: session, status } = useSession();
+  const router = useRouter();
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.replace('/');
+    }
+  }, [status, router]);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      try {
+        const response = await fetch(`/api/user?email=${id}&year=${year}`);
+        if (response.ok) {
+          const data = await response.json();
+          setUserProfile(data);
+        }
+      } catch (error) {
+        console.error('Error fetching profile:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (session) {
+      fetchProfile();
+    }
+  }, [session, year, id]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="font-['Press_Start_2P'] text-white text-sm">Loading...</div>
+      </div>
+    );
   }
 
-  const profile = await getProfile(year, id);
+  if (!userProfile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="font-['Press_Start_2P'] text-white text-sm">Profile not found</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
       <main className="flex-1 flex items-center justify-center p-4">
         <div className="max-w-2xl w-full space-y-8">
           <div className="text-center space-y-6">
+            <CldImage
+              src={userProfile.image || 'default-pfp'}
+              alt="Profile picture" 
+              width={128}
+              height={128}
+              className="mx-auto rounded-full "
+            />
             <h1 className="type-animation font-['Press_Start_2P'] text-xl text-white">
-              Profile Details
+              {userProfile.name}
             </h1>
             <div className="type-animation delay-1 font-['Press_Start_2P'] text-xs text-gray-400">
-              Year: {year} • ID: {id}
+              {userProfile.email}
             </div>
           </div>
 
           <div className="space-y-8">
-            {profile.map((profile: any) => (
-              <div key={profile._id.toString()} className="space-y-6">
-                <div className="type-animation delay-2 space-y-4">
-                  <h2 className="font-['Press_Start_2P'] text-lg text-white">
-                    {profile.name}
-                  </h2>
-                  <div className="font-['Press_Start_2P'] text-xs text-gray-400">
-                    {profile.email}
+            <div className="space-y-6">
+              <div className="type-animation delay-2 space-y-4">
+                <h2 className="font-['Press_Start_2P'] text-lg text-white">Student Info</h2>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <h3 className="font-['Press_Start_2P'] text-sm text-white">Student ID</h3>
+                    <p className="font-['Press_Start_2P'] text-xs text-gray-400">{userProfile.id}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <h3 className="font-['Press_Start_2P'] text-sm text-white">Year</h3>
+                    <p className="font-['Press_Start_2P'] text-xs text-gray-400">{userProfile.year}</p>
                   </div>
                 </div>
-
-                <div className="type-animation delay-3 space-y-2">
-                  <h3 className="font-['Press_Start_2P'] text-sm text-white">
-                    Student Info
-                  </h3>
-                  <div className="font-['Press_Start_2P'] text-xs text-gray-400">
-                    ID: {profile.id}
-                  </div>
-                  <div className="font-['Press_Start_2P'] text-xs text-gray-400">
-                    Year: {profile.year}
-                  </div>
-                </div>
-
-                {profile.bio && (
-                  <div className="type-animation delay-4 space-y-2">
-                    <h3 className="font-['Press_Start_2P'] text-sm text-white">
-                      Bio
-                    </h3>
-                    <p className="font-['Press_Start_2P'] text-xs text-gray-300 leading-relaxed">
-                      {profile.bio}
-                    </p>
-                  </div>
-                )}
               </div>
-            ))}
+
+              {userProfile.bio && (
+                <div className="type-animation delay-3 space-y-2">
+                  <h3 className="font-['Press_Start_2P'] text-sm text-white">Bio</h3>
+                  <p className="font-['Press_Start_2P'] text-xs text-gray-300 leading-relaxed">
+                    {userProfile.bio}
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </main>
     </div>
   );
-} 
+}

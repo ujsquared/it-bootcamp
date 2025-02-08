@@ -48,15 +48,15 @@ async function ProfileList({ year }: { year: string }) {
     </div>
   );
 }
-
 export default async function YearPage({ params }: { params: { year: string } }) {
   const session = await getServerSession();
+  const { year } = await params; // Remove the await here
   
   if (!session) {
     redirect('/login');
   }
 
-  if(!ValidYears.includes(params.year)){
+  if(!ValidYears.includes(year)){
     redirect('/profile'); // Redirect to year selection instead of showing 404
   }
   
@@ -64,7 +64,7 @@ export default async function YearPage({ params }: { params: { year: string } })
     <div className="min-h-screen p-8">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-8 vhs-title">
-          {`YEAR ${params.year}`.split('').map((char, i) => (
+          {`YEAR ${year}`.split('').map((char, i) => (
             <span key={i} className="char" style={{ '--char-index': i } as any}>
               {char}
             </span>
@@ -77,8 +77,8 @@ export default async function YearPage({ params }: { params: { year: string } })
         </div>
       </div>
       <Suspense fallback={<VHSLoading />}>
-        <ProfileList year={params.year} />
+        <ProfileList year={year} />
       </Suspense>
     </div>
   );
-} 
+}

@@ -10,7 +10,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user }) {
+    async signIn({ user }: { user: { email?: string | null } }) {
       try {
         const isAllowedEmail = await checkAllowedEmail(user.email as string);
         return isAllowedEmail;
@@ -19,7 +19,7 @@ export const authOptions = {
         return false;
       }
     },
-    async session({ session }) {
+    async session({ session }: { session: any }) {
       return session;
     },
   },
