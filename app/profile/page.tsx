@@ -15,7 +15,7 @@ export default async function ProfilePage() {
     <div className="flex min-h-screen flex-col items-center justify-center">
       <h1 className="text-3xl font-bold mb-12 vhs-title">
         {"SELECT YEAR".split('').map((char, i) => (
-          <span key={i} className="char" style={{ '--char-index': i } as any}>
+          <span key={i} className="char" style={{ '--char-index': i } as React.CSSProperties}>
             {char}
           </span>
         ))}

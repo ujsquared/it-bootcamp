@@ -2,6 +2,11 @@
 import NavBar from "./NavBar";
 import { useEffect, useState } from 'react';
 
+// Add custom type for the style object
+type CharStyle = React.CSSProperties & {
+    '--char-index': number;
+};
+
 export default function GlobalLayout({ children }: { children: React.ReactNode }) {
     const [isPlaying, setIsPlaying] = useState(true);
 
@@ -22,7 +27,7 @@ export default function GlobalLayout({ children }: { children: React.ReactNode }
             {/* VHS Title */}
             <div className="vhs-title">
                 {"IT BOOTCAMP".split('').map((char, i) => (
-                    <span key={i} className="char" style={{ '--char-index': i } as any}>
+                    <span key={i} className="char" style={{ '--char-index': i } as CharStyle}>
                         {char}
                     </span>
                 ))}
@@ -52,4 +57,4 @@ export default function GlobalLayout({ children }: { children: React.ReactNode }
             </div>
         </div>
     );
-} 
+}

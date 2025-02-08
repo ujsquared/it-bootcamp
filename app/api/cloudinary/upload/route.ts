@@ -137,7 +137,7 @@ export async function POST(request: Request) {
     const db = client.db('student_store');
     const usersCollection = db.collection(year);
 
-    const result = await usersCollection.updateOne(
+    await usersCollection.updateOne(
       { id: (userId) },
       { $set: { profile_pic: uploadResponse.secure_url } }
     );

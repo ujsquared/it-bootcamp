@@ -22,12 +22,19 @@ async function getMongoClient() {
   return client;
 }
 
+interface Profile {
+  _id: string;
+  name: string;
+  id: string;
+  year: string;
+}
+
 async function getProfiles(year: string) {
   try {
     const client = await getMongoClient();
     const database = client.db('student_store');
     const collection = database.collection(year);
-    return await collection.find({}).toArray();
+    return (await collection.find({}).toArray()) as unknown as Profile[];
   } catch (error) {
     console.error('Error connecting to MongoDB:', error);
     return [];
@@ -40,7 +47,7 @@ async function ProfileList({ year }: { year: string }) {
   
   return (
     <div className="profiles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {profiles.map((profile: any) => (
+      {profiles.map((profile: Profile) => (
         <div key={profile._id.toString()} className="profile-card p-4 border rounded-lg">
           <h2>{profile.name}, {profile.id}, {profile.year}</h2>
         </div>
@@ -65,7 +72,7 @@ export default async function YearPage({ params }: { params: { year: string } })
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-8 vhs-title">
           {`YEAR ${year}`.split('').map((char, i) => (
-            <span key={i} className="char" style={{ '--char-index': i } as any}>
+            <span key={i} className="char" style={{ '--char-index': i } as React.CSSProperties}>
               {char}
             </span>
           ))}

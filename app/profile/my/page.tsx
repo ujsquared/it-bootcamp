@@ -4,10 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState, useRef } from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { CldImage } from 'next-cloudinary';
-import { MongoClient } from 'mongodb';
-import Image from 'next/image';
 
-const CLOUDINARY_CLOUD_NAME = process.env.CLOUDINARY_CLOUD_NAME;
 interface UserProfile {
   _id: string;
   name: string;
@@ -23,7 +20,6 @@ export default function MyPage() {
   const router = useRouter();
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
-  const [imageUrl, setImageUrl] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isEditingBio, setIsEditingBio] = useState(false);
   const [editedBio, setEditedBio] = useState('');
@@ -42,9 +38,7 @@ export default function MyPage() {
           const response = await fetch(`/api/user?email=${session.user.email}&year=${year}`);
           if (response.ok) {
             const data = await response.json();
-            const cloudinary_image_url = `profile-pictures/user_${session.user.email.slice(0, 7)}`;
             setUserProfile(data);
-            setImageUrl(cloudinary_image_url || ''); // Set initial image URL
           }
         } catch (error) {
           console.error('Error fetching user profile:', error);
@@ -84,9 +78,6 @@ export default function MyPage() {
 
       const data = await response.json();
       
-      // Update the image URL in the UI
-      setImageUrl(data.url);
-      
       // Update the userProfile state with the new image URL
       setUserProfile(prev => prev ? { ...prev, image: data.url } : null);
 
@@ -120,9 +111,6 @@ export default function MyPage() {
     }
   };
 
-  const handleSave = () => {
-    router.push('/');
-  };
 
   if (status === 'loading' || loading) {
     return (

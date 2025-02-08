@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { Session } from "next-auth";
 import { checkAllowedEmail } from "../check-email/route";
 
 export const authOptions = {
@@ -19,7 +20,7 @@ export const authOptions = {
         return false;
       }
     },
-    async session({ session }: { session: any }) {
+    async session({ session }: { session: Session }) {
       return session;
     },
   },

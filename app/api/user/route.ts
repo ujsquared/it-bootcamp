@@ -37,7 +37,7 @@ export async function GET(request: Request) {
         }
 
         // Remove sensitive information before sending response
-        const { password, ...userWithoutPassword } = user;
+        const { ...userWithoutPassword } = user;
 
         return NextResponse.json(userWithoutPassword);
 
