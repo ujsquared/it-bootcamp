@@ -9,7 +9,7 @@ interface UserProfile {
   _id: string;
   name: string;
   email: string;
-  image: string;
+  profile_pic: string;
   id: string;
   year: string;
   bio: string;
@@ -70,7 +70,7 @@ export default function ProfilePage({ params }: { params: Promise<{ year: string
         <div className="max-w-2xl w-full space-y-8">
           <div className="text-center space-y-6">
             <CldImage
-              src={userProfile.image || 'default-pfp'}
+              src={userProfile.profile_pic || 'default-pfp'}
               alt="Profile picture" 
               width={128}
               height={128}

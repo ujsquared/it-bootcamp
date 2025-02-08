@@ -32,7 +32,7 @@ export async function GET(request: Request) {
 
         // Find user by email
         const user = await db.collection(year).findOne({ id: college_id});
-
+        console.log(user); 
         if (!user) {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }

@@ -12,7 +12,7 @@ interface UserProfile {
   _id: string;
   name: string;
   email: string;
-  image: string;
+  profile_pic: string;
   id: string;
   year: string;
   bio: string;
@@ -25,6 +25,8 @@ export default function MyPage() {
   const [loading, setLoading] = useState(true);
   const [imageUrl, setImageUrl] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isEditingBio, setIsEditingBio] = useState(false);
+  const [editedBio, setEditedBio] = useState('');
 
   useEffect(() => {
     if (status === 'unauthenticated') {
@@ -40,8 +42,9 @@ export default function MyPage() {
           const response = await fetch(`/api/user?email=${session.user.email}&year=${year}`);
           if (response.ok) {
             const data = await response.json();
+            const cloudinary_image_url = `profile-pictures/user_${session.user.email.slice(0, 7)}`;
             setUserProfile(data);
-            setImageUrl(data.image || ''); // Set initial image URL
+            setImageUrl(cloudinary_image_url || ''); // Set initial image URL
           }
         } catch (error) {
           console.error('Error fetching user profile:', error);
@@ -62,41 +65,58 @@ export default function MyPage() {
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file || !userProfile?._id) return;
+    if (!file || !userProfile?.id) return;
 
     try {
+      // Create FormData to send the image
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('userId', userProfile._id);
+      formData.append('userId', userProfile.id);
 
-      const uploadResponse = await fetch('/api/cloudinary/upload', {
+      const response = await fetch('/api/cloudinary/upload', {
         method: 'POST',
         body: formData,
       });
 
-      if (!uploadResponse.ok) {
+      if (!response.ok) {
         throw new Error('Failed to upload image');
       }
 
-      const uploadData = await uploadResponse.json();
+      const data = await response.json();
+      
+      // Update the image URL in the UI
+      setImageUrl(data.url);
+      
+      // Update the userProfile state with the new image URL
+      setUserProfile(prev => prev ? { ...prev, image: data.url } : null);
 
-      const updateResponse = await fetch('/api/user/update-image', {
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      // You might want to add some error handling UI here
+    }
+  };
+
+  const handleUpdateBio = async () => {
+    if (!userProfile?.id) return;
+
+    try {
+      const response = await fetch(`/api/user/update/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          userId: userProfile._id,
-          imageUrl: uploadData.secure_url,
+          userId: userProfile.id,
+          bio: editedBio,
         }),
       });
 
-      if (updateResponse.ok) {
-        setImageUrl(uploadData.secure_url);
-        setUserProfile(prev => prev ? { ...prev, image: uploadData.secure_url } : null);
+      if (response.ok) {
+        setUserProfile(prev => prev ? { ...prev, bio: editedBio } : null);
+        setIsEditingBio(false);
       }
     } catch (error) {
-      console.error('Error handling image upload:', error);
+      console.error('Error updating bio:', error);
     }
   };
 
@@ -113,7 +133,6 @@ export default function MyPage() {
       </div>
     );
   }
-
   if (!session) {
     return null;
   }
@@ -127,7 +146,7 @@ export default function MyPage() {
               onClick={handleImageClick}
             >
               <CldImage
-                src={imageUrl || 'default-pfp' }
+                src={userProfile?.profile_pic || 'default-pfp' }
                 alt="Profile picture"
                 width={128}
                 height={128}
@@ -160,30 +179,53 @@ export default function MyPage() {
             )}
           </div>
           <div className='text-sm'>
-          {userProfile?.bio && (
-            <div className="space-y-4">
-              <h2 className="type-animation delay-3 font-['Press_Start_2P'] text-sm text-white">Bio</h2>
-              <p className="type-animation delay-3 font-['Press_Start_2P'] text-xs text-gray-300 leading-relaxed">
-                {userProfile.bio}
-              </p>
-            </div>
-          )}
+            {isEditingBio ? (
+              <div className="space-y-4">
+                <h2 className="type-animation delay-3 font-['Press_Start_2P'] text-sm text-white">Edit Bio</h2>
+                <textarea
+                  value={editedBio}
+                  onChange={(e) => setEditedBio(e.target.value)}
+                  className="w-full h-32 bg-white/5 text-white p-3 text-xs font-['Press_Start_2P'] resize-none"
+                  placeholder="Write your bio here..."
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleUpdateBio}
+                    className="font-['Press_Start_2P'] text-xs bg-green-500/40 hover:bg-green-500/30 text-white py-2 px-4 transition-colors"
+                  >
+                    Save Bio
+                  </button>
+                  <button
+                    onClick={() => setIsEditingBio(false)}
+                    className="font-['Press_Start_2P'] text-xs bg-red-500/40 hover:bg-red-500/30 text-white py-2 px-4 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : (
+              userProfile?.bio && (
+                <div className="space-y-4">
+                  <h2 className="type-animation delay-3 font-['Press_Start_2P'] text-sm text-white">Bio</h2>
+                  <p className="type-animation delay-3 font-['Press_Start_2P'] text-xs text-gray-300 leading-relaxed">
+                    {userProfile.bio}
+                  </p>
+                </div>
+              )
+            )}
           </div>
 
           <div className="space-y-4">
             <h2 className="type-animation delay-4 font-['Press_Start_2P'] text-sm text-white">Quick Actions</h2>
             <div className="grid grid-cols-3 gap-4">
-              <button className="font-['Press_Start_2P'] text-xs bg-white/5 hover:bg-white/10 text-white py-3 px-4 transition-colors">
-                Edit Profile
-              </button>
-              <button className="font-['Press_Start_2P'] text-xs bg-white/5 hover:bg-white/10 text-white py-3 px-4 transition-colors">
-                Settings
-              </button>
-              <button
-                onClick={handleSave}
-                className="font-['Press_Start_2P'] text-xs bg-green-500/40 hover:bg-green-500/30 text-white py-3 px-4 transition-colors"
+              <button 
+                onClick={() => {
+                  setIsEditingBio(true);
+                  setEditedBio(userProfile?.bio || '');
+                }}
+                className="font-['Press_Start_2P'] text-xs bg-white/5 hover:bg-white/10 text-white py-3 px-4 transition-colors"
               >
-                Save & Exit
+                Edit Bio
               </button>
             </div>
           </div>
