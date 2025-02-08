@@ -25,7 +25,6 @@ export default function About() {
               {/* Ujjwal Kala */}
               <div className="flex flex-col">
                 <span className="text-white text-lg mb-2">Ujjwal Kala</span>
-                <span className="text-gray-400 text-sm mb-3">Backend Developer</span>
                 <div className="flex space-x-4">
                   <Link href="https://www.linkedin.com/in/ujjwal-kala-8a854328a/" className="text-gray-400 transition-colors">
                     <FaLinkedin size={20} />
@@ -39,7 +38,6 @@ export default function About() {
               {/* Ansh Malgotra */}
               <div className="flex flex-col">
                 <span className="text-white text-lg mb-2">Ansh Malgotra</span>
-                <span className="text-gray-400 text-sm mb-3">Frontend Developer</span>
                 <div className="flex space-x-4">
                   <Link href="https://www.linkedin.com/in/ansh-malgotra-7b39b1274/" className="text-gray-400 transition-colors">
                     <FaLinkedin size={20} />

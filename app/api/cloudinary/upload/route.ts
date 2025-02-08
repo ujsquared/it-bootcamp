@@ -141,12 +141,9 @@ export async function POST(request: Request) {
       { id: (userId) },
       { $set: { profile_pic: uploadResponse.secure_url } }
     );
-    console.log(userId);
-    console.log(result);
 
     await client.close();
 
-    console.log(uploadResponse.secure_url)
     return NextResponse.json({ 
       url: uploadResponse.secure_url,
       message: 'Image uploaded successfully' 

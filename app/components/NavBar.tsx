@@ -3,9 +3,31 @@
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function NavBar() {
   const { data: session, status } = useSession();
+  const [profilePic, setProfilePic] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchProfilePic = async () => {
+      if (session?.user?.email) {
+        try {
+          const response = await fetch(`/api/user?email=${session.user.email}&year=${'20'+session?.user?.email?.slice(2, 4)}`);
+          const data = await response.json();
+          if (data.profile_pic) {
+            setProfilePic(data.profile_pic);
+          }
+        } catch (error) {
+          console.error('Error fetching profile picture:', error);
+        }
+      }
+    };
+
+    if (session) {
+      fetchProfilePic();
+    }
+  }, [session]);
 
   const handleSignIn = () => {
     signIn('google', { callbackUrl: '/profile/my' });
@@ -35,9 +57,18 @@ export default function NavBar() {
                     href="/profile/my"
                     className="flex items-center space-x-2 text-white hover:text-gray-300 transition-colors"
                   >
-                    {session.user?.image && (
+                    {profilePic ? (
                       <Image
-                        src={session.user.image}
+                        src={profilePic}
+                        alt="Profile"
+                        width={32}
+                        height={32}
+                        className="rounded-full"
+                      />
+                    ) : (
+                      // Fallback to session image or default avatar
+                      <Image
+                        src={session.user?.image || '/default-avatar.png'}
                         alt="Profile"
                         width={32}
                         height={32}
@@ -69,4 +100,4 @@ export default function NavBar() {
       </div>
     </nav>
   );
-} 
+}
