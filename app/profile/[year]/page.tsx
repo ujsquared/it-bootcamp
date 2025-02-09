@@ -6,10 +6,13 @@ import { Suspense } from 'react';
 import VHSLoading from '@/app/components/VHSLoading';
 import Link from 'next/link';
 
+
 const ValidYears = ["2022", "2023", "2024"]
 
 // Optimize MongoDB connection by reusing the client
 let client: MongoClient | null = null;
+
+
 
 async function getMongoClient() {
   if (!client) {
@@ -28,6 +31,7 @@ interface Profile {
   name: string;
   id: string;
   year: string;
+  profile_pic: string;
 }
 
 async function getProfiles(year: string) {
@@ -50,8 +54,9 @@ async function ProfileList({ year }: { year: string }) {
     <div className="profiles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {profiles.map((profile: Profile) => (
         <Link key={profile._id.toString()} href={`/profile/${year}/${profile.id}`}>
-          <div className="profile-card p-4 border rounded-lg cursor-pointer">
-            <h2>{profile.name}, {profile.id}, {profile.year}</h2>
+          <div className="profile-card p-4 border rounded-lg cursor-pointer h-32 w-full flex items-center justify-center">
+              <img src={profile.profile_pic || '/default-pfp.webp' } alt="Profile picture" className="w-16 h-16 rounded-full" />
+            <h2 className="text-sm text-center">{profile.name}, {profile.id}, {profile.year}</h2>
           </div>
         </Link>
       ))}
