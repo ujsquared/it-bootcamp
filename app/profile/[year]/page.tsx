@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth/next'; // You'll need to install nex
 import BatchYearButton from '@/app/components/ShiftButton';
 import { Suspense } from 'react';
 import VHSLoading from '@/app/components/VHSLoading';
+import Link from 'next/link';
 
 const ValidYears = ["2022", "2023", "2024"]
 
@@ -44,13 +45,15 @@ async function getProfiles(year: string) {
 // Profile list component
 async function ProfileList({ year }: { year: string }) {
   const profiles = await getProfiles(year);
-  
+
   return (
     <div className="profiles-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {profiles.map((profile: Profile) => (
-        <div key={profile._id.toString()} className="profile-card p-4 border rounded-lg">
-          <h2>{profile.name}, {profile.id}, {profile.year}</h2>
-        </div>
+        <Link key={profile._id.toString()} href={`/profile/${year}/${profile.id}`}>
+          <div className="profile-card p-4 border rounded-lg cursor-pointer">
+            <h2>{profile.name}, {profile.id}, {profile.year}</h2>
+          </div>
+        </Link>
       ))}
     </div>
   );
@@ -58,15 +61,15 @@ async function ProfileList({ year }: { year: string }) {
 export default async function YearPage({ params }: { params: Promise<{ year: string }> }) {
   const session = await getServerSession();
   const { year } = await params; // Remove the await here
-  
+
   if (!session) {
     redirect('/login');
   }
 
-  if(!ValidYears.includes(year)){
+  if (!ValidYears.includes(year)) {
     redirect('/profile'); // Redirect to year selection instead of showing 404
   }
-  
+
   return (
     <div className="min-h-screen p-8">
       <div className="mb-8">
