@@ -1,8 +1,6 @@
 // // app/api/cloudinary/upload/route.ts
 // import { v2 as cloudinary } from 'cloudinary';
 // import { NextResponse } from 'next/server';
-// import { getServerSession } from 'next-auth';
-// import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 // // Configure Cloudinary
 // cloudinary.config({
@@ -93,6 +91,8 @@
 import { NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 import { MongoClient } from 'mongodb';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/auth.config';
 
 // Configure Cloudinary
 cloudinary.config({
@@ -103,6 +103,14 @@ cloudinary.config({
 
 export async function POST(request: Request) {
   try {
+    // Check authentication
+    const session = await getServerSession(authOptions);
+    if(!session || !session.user) {
+        return NextResponse.json(
+            { error: 'Unauthorized' },
+            { status: 401 }
+        );
+    }
     const formData = await request.formData();
     const file = formData.get('file') as File;
     const userId = formData.get('userId') as string;

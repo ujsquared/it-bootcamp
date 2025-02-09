@@ -55,7 +55,7 @@ async function ProfileList({ year }: { year: string }) {
     </div>
   );
 }
-export default async function YearPage({ params }: { params: { year: string } }) {
+export default async function YearPage({ params }: { params: Promise<{ year: string }> }) {
   const session = await getServerSession();
   const { year } = await params; // Remove the await here
   
