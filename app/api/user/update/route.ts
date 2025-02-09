@@ -4,7 +4,7 @@ import { MongoClient } from 'mongodb';
 export async function POST(request: Request) {
   try {
     const { userId, bio } = await request.json();
-    const year = '2023';
+    const year = '20' + userId.slice(2, 4);
 
     const client = await MongoClient.connect(process.env.MONGODB_URI as string);
     const db = client.db('student_store');
